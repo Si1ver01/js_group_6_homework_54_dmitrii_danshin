@@ -1,0 +1,11 @@
+.table.table th,
+.table th,
+table.table td,
+.table td
+{
+  padding: 0;
+}
+
+.win-table{
+  margin: 0 auto;
+}
