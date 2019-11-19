@@ -14,7 +14,6 @@ class CardGenerator {
 
   getOneCard(){
     const randomNubmer = Math.floor(Math.random()*this.cards.length);
-    // console.log(randomNubmer);
     const randomCard = this.cards[randomNubmer];
     this.cards.splice(randomNubmer,1);
     return randomCard;

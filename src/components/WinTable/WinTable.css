@@ -3,7 +3,7 @@
 table.table td,
 .table td
 {
-  padding: 0;
+  padding: 0 5px;
 }
 
 .win-table{

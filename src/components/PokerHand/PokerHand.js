@@ -5,17 +5,17 @@ class PokerHand {
   }
 
   getOutcome = () => {
-    if (this.flush() === 5 && this.street() === 1){
+    if (this.flush() && this.street() === 1){
       return `royalFlush`;
-    } else if (this.flush() === 5 && this.street()=== 2){
+    } else if (this.flush() && this.street()=== 2){
       return `streetFlush`;
-    } else if (this.care() === 3){
+    } else if (this.care()){
       return `care`;
     } else if (this.partsAndTripletAndFullhouse() === 4){
       return `fullHouse`;
-    } else if (this.flush() === 5){
+    } else if (this.flush()){
       return `flush`;
-    } else if (this.street() === 2){
+    } else if (this.street()){
       return `street`;
     } else if (this.partsAndTripletAndFullhouse() === 7){
       return `set`;
@@ -31,27 +31,15 @@ class PokerHand {
   partsAndTripletAndFullhouse = () =>{
     //Одна пара , две пары , триплет, фулл хаус
     const cards = [...this.cards];
-    // console.log("Я получил ", cards);
-
-    const combination = cards.filter((elem, index, currentMass) => {
-      if (1 < currentMass.filter(element => element.ranks === elem.ranks).length) {
-        return true;
-      }
-    }).sort((a,b) => a.ranks.charCodeAt() - b.ranks.charCodeAt());
-    // console.log("Комбинации - ",combination);
-
+    const combination = cards.filter((elem, index, currentMass) => 1 < currentMass.filter(element => element.ranks === elem.ranks).length)
 
     if (combination.length === 2){
-      // console.log('У вас пара' , combination[0].ranks);
       return 9;
     } else if (combination.length === 4) {
-      // console.log('У вас две пары из ',combination[0].ranks , ' и ' , combination[2].ranks);
       return 8;
     } else if (combination.length === 5) {
-      // console.log("У вас фулхаус из " , combination[0].ranks, ' и ' , combination[4].ranks);
       return 4;
     } else if (combination.length === 3 ) {
-      // console.log("У вас триплет из " , combination[0].ranks);
       return 7;
     }
 
@@ -61,14 +49,9 @@ class PokerHand {
   flush(){
     //Flush
     const cards = [...this.cards];
-    const combination = cards.filter((elem,index,currentMass) => {
-      if (cards[0].suit === elem.suit){
-        return true;
-      }
-    })
+    const combination = cards.filter(elem => cards[0].suit === elem.suit)
     if (combination.length === 5){
-      // console.log('У вас флеш из ' , combination[0].suit);
-      return 5;
+      return true;
     }
     return false;
   }
@@ -79,26 +62,23 @@ class PokerHand {
     const combination = cards.sort((a,b) => a.weight - b.weight);
     let total = combination.filter((elem,index,currentMass) => {
       if (index < currentMass.length -1 ){
-        // console.log((elem.weight + 1) - currentMass.find(element => element.weight === currentMass[index+1].weight).weight)
         if (!((elem.weight + 1) - currentMass.find(element => element.weight === currentMass[index+1].weight).weight)){
           return true;
         }
       }
     }).length;
 
+    //Если комбинация от туза до 4
     if(combination[3].weight === 4 && combination[4].weight=== 13){
       total++;
-      combination.splice(0,0,...combination.splice(4,1));
     }
     
-    // console.log(combination , ' combination')
-    // console.log(total, 'total');
     if (total === 4 ){
+      //Проверка для роялфлеша
       if (combination[0].weight === 9 && combination[4].weight === 13){
-        // console.log('У вас Роял стрит от ',combination[0].raks , ' до ' , combination[4].raks); 
         return 1;   
       } else {
-        // console.log('У вас стрит от ',combination[0].raks , ' до ' , combination[4].raks);    
+        //ПРосто стрит
         return 2;
       }
     }
@@ -108,19 +88,11 @@ class PokerHand {
   care(){
     //care
     const cards = [...this.cards];
-    // console.log("Я получил ", cards);
-
-    const combination = cards.filter((elem, index, currentMass) => {
-      if (1 < currentMass.filter(element => element.ranks === elem.ranks).length) {
-        return true;
-      }
-    });
-
+    const combination = cards.filter((elem, index, currentMass) => 1 < currentMass.filter(element => element.ranks === elem.ranks).length)
     const check = combination.filter(elem => elem.ranks === combination[0].ranks);
 
     if (check.length === 4){
-      // console.log('У вас карэ из ', check[0].ranks);
-      return 3;
+      return true;
     }
     return false;
   }

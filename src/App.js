@@ -6,19 +6,18 @@ import CardGenerator from "./components/CarGenerator/CardGenerator.js";
 import PokerHand from "./components/PokerHand/PokerHand.js";
 import GetWin from './components/GetWin/GetWin.js'
 import WinTable from './components/WinTable/WinTable.jsx'
+import DrawBtn from './components/DrawBtn/DrawBtn.jsx'
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.deck = null;
-    // this.cards = this.deck.getMoreCards(5);
     this.state = {
       cards: null,
       quantityDraw: 0,
       drawing: false,
       drawBetButton : true ,
       drawCard : false ,
-      // combination: new PokerHand(this.cards).getOutcome(),
       combination : null,
       bet: null,
       money : 100,
@@ -32,9 +31,6 @@ class App extends Component {
     const combination = new PokerHand(cards).getOutcome();
     const drawing = !this.state.drawing;
     const drawBetButton = !this.state.drawBetButton;
-    // let money = this.state.money;
-    // const moneyWin = new GetWin(bet,combination).сountMoney();
-    // money += moneyWin;
     this.setState({bet,cards,combination,drawing,drawBetButton,drawCard:true})
   }
 
@@ -78,24 +74,17 @@ class App extends Component {
     return (
       <div className="App py-5">
         <WinTable bet={this.state.bet} combination={this.state.combination}/>
-        <p>Money : {this.state.money}</p>
+        <p className='my-1'>Money : {this.state.money} <i className="fas fa-dollar-sign green-text"></i></p>
         
         {this.state.drawBetButton ? <BetButton betting={this.betting}/> : null}
-        {this.state.drawCard ?   <CardList
+        {this.state.drawCard ?<CardList
           cards={this.state.cards}
           selectCard={this.selectCard}
           combination={this.state.combination}
+          drawCard={this.state.drawCard}
         /> : null}
-        {this.state.drawing ? (
-          <button className="btn btn-primary my-2" onClick={this.drawCard}>
-            Draw card ({this.state.quantityDraw})
-          </button>
-        ) : null}
-         {this.state.drawing ? (
-          <button className="btn btn-primary my-2" onClick={this.drawCard}>
-            Забрать выиграш
-          </button>
-        ) : null}
+
+        <DrawBtn quantityDraw={this.state.quantityDraw} drawCard={this.drawCard} drawing={this.state.drawing} pickWin={this.pickWin}/>
       </div>
     );
   }

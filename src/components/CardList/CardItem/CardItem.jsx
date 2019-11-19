@@ -1,7 +1,6 @@
 import React from "react";
 
 const CardItem = props => {
-  // console.log(props);
   const suits = {
     k: "♣",
     d: "♦",

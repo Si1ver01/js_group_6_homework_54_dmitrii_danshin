@@ -20,7 +20,6 @@ class GetWin {
     const bet = this.bet;
     const multiplayer = this.combinationList[this.combination];
     const result = bet * multiplayer;
-    console.log(result , 'Count Money()');
     if (result){
       return result;
     } else {

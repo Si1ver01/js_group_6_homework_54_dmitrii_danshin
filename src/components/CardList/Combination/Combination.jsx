@@ -23,6 +23,9 @@ const DrawCombination = props => {
       str += ` Роял-флеш от ${cards[0].ranks} до ${cards[4].ranks}`;
       break;
     case 2:
+      if (cards[3].weight === 4 && cards[4].weight=== 13){
+        cards.splice(0,0,...cards.splice(4,1));
+      }
       str += ` Стрит флеш от ${cards[0].ranks} до ${cards[4].ranks}`;
       break;
     case 3:
@@ -44,11 +47,6 @@ const DrawCombination = props => {
       str += ` Две пары из ${cards[1].ranks} и  ${cards[3].ranks}`;
       break;
     case 9:
-      // cards.filter((elem, index, currentMass) => {
-      //   if (1 < currentMass.filter(element => element.ranks === elem.ranks).length) {
-      //     return true;
-      //   }
-      // })
       let filter = cards.filter((elem, index, currentMass) =>
         1 < currentMass.filter(element => element.ranks === elem.ranks).length
           ? true
@@ -61,7 +59,7 @@ const DrawCombination = props => {
       break;
   }
 
-  return <p>{str}</p>;
+  return <p className='text-primary font-weight-bold'>{str}</p>;
 };
 
 export default DrawCombination;

@@ -4,7 +4,6 @@ import "./CardList.css";
 import DrawCombination from "./Combination/Combination.jsx";
 
 const CardList = props => {
-  // console.log(props);
   return (
     <div>
       <div>
@@ -22,8 +21,7 @@ const CardList = props => {
       ))}
     </div>
     </div>
-
-  );
+  )
 };
 
 export default CardList;
